@@ -1,3 +1,11 @@
 venv/
 .idea/
-
+__pycache__
+__pycache__/
+*.py[cod]
+venv
+*.sqlite3
+.DS_Store
+.idea
+.idea/workspace.xml
+shop/__pycache__/
