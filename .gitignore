@@ -8,4 +8,4 @@ venv
 .DS_Store
 .idea
 .idea/workspace.xml
-shop/__pycache__/
+example.log

@@ -1,0 +1,5 @@
+<ul class="menu">
+    <li><a href="{% url 'mainapp:home' %}" {% if 'home' in request.resolver_match.url_name %}class="active"{% endif %}>домой</a></li>
+    <li><a href="{% url 'mainapp:products' %}" {% if 'products' in request.resolver_match.url_name %}class="active"{% endif %}>продукты</a></li>
+    <li><a href="{% url 'mainapp:contact' %}" {% if 'contact' in request.resolver_match.url_name %}class="active"{% endif %}>контакты</a></li>
+</ul>
