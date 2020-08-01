@@ -65,33 +65,36 @@
 				<a class="explore" href="#">показать все <img src="/static/img/arrow.png" alt=""></a>
 			</div>
 			<div class="related-products clearfix">
+				{% for same_product in same_products %}
 				<div class="block">
-					<a href="#"><img src="/static/img/product-11.jpg" alt="">
+					<a href="#"><img src="/media/{{ same_product.image }}" alt="{{ same_products.image_alt }}">
 						<div class="text">
 							<img src="/static/img/icon-hover.png" alt="img">
-							<h4>Стул повышенного качества</h4>
-							<p>Не оторваться. </p>
+							<h3>{{ same_product.category.name }}</h3>
+							<h4>{{ same_product.name }}</h4>
+							<p>{{ same_product.short_desc }}</p>
 						</div>
 					</a>
 				</div>
-				<div class="block">
-					<a href="#"><img src="/static/img/product-21.jpg" alt="">
-						<div class="text">
-							<img src="/static/img/icon-hover.png" alt="img">
-							<h4>Стул повышенного качества</h4>
-							<p>Не оторваться. </p>
-						</div>
-					</a>
-				</div>
-				<div class="block">
-					<a href="#"><img src="/static/img/product-31.jpg" alt="">
-						<div class="text">
-							<img src="/static/img/icon-hover.png" alt="img">
-							<h4>Стул повышенного качества</h4>
-							<p>Не оторваться. </p>
-						</div>
-					</a>
-				</div>
+				{% endfor %}
+<!--				<div class="block">-->
+<!--					<a href="#"><img src="/static/img/product-21.jpg" alt="">-->
+<!--						<div class="text">-->
+<!--							<img src="/static/img/icon-hover.png" alt="img">-->
+<!--							<h4>Стул повышенного качества</h4>-->
+<!--							<p>Не оторваться. </p>-->
+<!--						</div>-->
+<!--					</a>-->
+<!--				</div>-->
+<!--				<div class="block">-->
+<!--					<a href="#"><img src="/static/img/product-31.jpg" alt="">-->
+<!--						<div class="text">-->
+<!--							<img src="/static/img/icon-hover.png" alt="img">-->
+<!--							<h4>Стул повышенного качества</h4>-->
+<!--							<p>Не оторваться. </p>-->
+<!--						</div>-->
+<!--					</a>-->
+<!--				</div>-->
 			</div>
 		</div>
 	</div>

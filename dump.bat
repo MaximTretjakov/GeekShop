@@ -1,0 +1,1 @@
+python manage.py dumpdata mainapp --indent 4 > mainapp/fixtures/dump.json

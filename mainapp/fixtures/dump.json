@@ -1,0 +1,78 @@
+[
+{
+    "model": "mainapp.productcategory",
+    "pk": 1,
+    "fields": {
+        "name": "\u0441\u0442\u0443\u043b\u044c\u044f",
+        "description": "\u0423\u0434\u043e\u0431\u043d\u044b\u0435 \u0441\u0442\u0443\u043b\u044c\u044f"
+    }
+},
+{
+    "model": "mainapp.productcategory",
+    "pk": 2,
+    "fields": {
+        "name": "\u0448\u043a\u0430\u0444\u044b",
+        "description": "\u0412\u043c\u0435\u0441\u0442\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0435 \u0448\u043a\u0430\u0444\u044b"
+    }
+},
+{
+    "model": "mainapp.productcategory",
+    "pk": 3,
+    "fields": {
+        "name": "\u043a\u0440\u043e\u0432\u0430\u0442\u0438",
+        "description": "\u041a\u043e\u043c\u0444\u043e\u0440\u0442\u043d\u044b\u0435 \u043a\u0440\u043e\u0432\u0430\u0442\u0438"
+    }
+},
+{
+    "model": "mainapp.product",
+    "pk": 5,
+    "fields": {
+        "category": 3,
+        "name": "\u041a\u0440\u043e\u0432\u0430\u0442\u043a\u0430 \u0434\u0435\u0442\u0441\u043a\u0430\u044f",
+        "image": "products_images/product-3-sm.jpg",
+        "short_desc": "\u041a\u0440\u0430\u0442\u043a\u043e\u0435 \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u0435 \u043a\u0440\u043e\u0432\u0430\u0442\u043a\u0438 \u0434\u0435\u0442\u0441\u043a\u043e\u0439",
+        "description": "\u041a\u0440\u043e\u0432\u0430\u0442\u043a\u0430 \u0438\u0434\u0435\u0430\u043b\u044c\u043d\u043e \u043f\u043e\u0434\u043e\u0439\u0434\u0435\u0442 \u0432\u0430\u0448\u0435\u043c\u0443 \u0440\u0435\u0431\u0451\u043d\u043a\u0443.",
+        "price": "5000.00",
+        "quantity": 10
+    }
+},
+{
+    "model": "mainapp.product",
+    "pk": 6,
+    "fields": {
+        "category": 3,
+        "name": "\u041a\u0440\u043e\u0432\u0430\u0442\u044c \u0432\u0437\u0440\u043e\u0441\u043b\u0430\u044f",
+        "image": "products_images/product-3-sm_FqC1X0q.jpg",
+        "short_desc": "\u041a\u0440\u0430\u0442\u043a\u043e\u0435 \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u0435 \u043a\u0440\u043e\u0432\u0430\u0442\u0438 \u0432\u0437\u0440\u043e\u0441\u043b\u043e\u0439",
+        "description": "\u0421\u0443\u043f\u0435\u0440 \u043f\u0440\u043e\u0447\u043d\u0430\u044f, \u0431\u043e\u043b\u044c\u0448\u0430\u044f \u043a\u0440\u043e\u0432\u0430\u0442\u044c \u0434\u043b\u044f \u0432\u0437\u0440\u043e\u0441\u043b\u044b\u0445.\r\n\u041a\u0440\u0435\u043f\u043a\u0430\u044f.",
+        "price": "15000.00",
+        "quantity": 4
+    }
+},
+{
+    "model": "mainapp.product",
+    "pk": 7,
+    "fields": {
+        "category": 1,
+        "name": "\u0421\u0442\u0443\u043b\u044c\u0447\u0430\u043a \u0434\u043b\u044f \u043c\u0430\u043b\u044b\u0448\u0435\u0439.",
+        "image": "products_images/product-4-sm.jpg",
+        "short_desc": "\u041a\u0440\u0430\u0442\u043a\u043e\u0435 \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u0435 \u0441\u0442\u0443\u043b\u0430",
+        "description": "\u041d\u0430 \u043d\u0430\u0448\u0438\u0445 \u0441\u0442\u0443\u043b\u0430\u0445 \u0432\u0430\u0448 \u043c\u0430\u043b\u044b\u0448 \u0431\u0443\u0434\u0435\u0442 \u0441\u043f\u043e\u043a\u043e\u0439\u043d\u043e \u0441\u0438\u0434\u0435\u0442\u044c \u0446\u0435\u043b\u044b\u0439 \u0434\u0435\u043d\u044c.",
+        "price": "14000.00",
+        "quantity": 5
+    }
+},
+{
+    "model": "mainapp.product",
+    "pk": 8,
+    "fields": {
+        "category": 2,
+        "name": "\u0428\u043a\u0430\u0444 \u0432\u043c\u0435\u0441\u0442\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0439",
+        "image": "products_images/product-1.jpg",
+        "short_desc": "\u041a\u0440\u0430\u0442\u043a\u043e\u0435 \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u0435 \u0448\u043a\u0430\u0444\u0430",
+        "description": "\u0428\u043a\u0430\u0444 \u0432 \u043a\u043e\u0442\u043e\u0440\u044b\u0439 \u043c\u043e\u0436\u043d\u043e \u0432\u043f\u0438\u0445\u043d\u0443\u0442\u044c \u043d\u0435\u0432\u043f\u0438\u0445\u0443\u0435\u043c\u043e\u0435.",
+        "price": "15000.00",
+        "quantity": 14
+    }
+}
+]

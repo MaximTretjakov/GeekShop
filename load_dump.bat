@@ -1,0 +1,1 @@
+python manage.py loaddata mainapp/fixtures/dump.json

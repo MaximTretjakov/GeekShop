@@ -29,13 +29,13 @@
 		<div class="clearfix">
 		</div>
 		<div class="tab-content">
-			{% for item in dynamic_data %}
+			{% for product in products %}
 				<div class="block">
-					<a href="#"><img src="{% static item.img %}" alt="Product">
+					<a href="#"><img src="/media/{{ product.image }}" alt="/media/{{ product.short_desc }}">
 						<div class="text">
-							<img src="/static/img/icon-hover.png" alt="img">
-							<h4>{{ item.header }}</h4>
-							<p>{{ item.desc }}</p>
+							<h3>{{ product.category.name }}</h3>
+							<h4>{{ product.name }}</h4>
+							<p>{{ product.description }}</p>
 						</div>
 					</a>
 				</div>
