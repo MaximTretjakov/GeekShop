@@ -1,5 +1,35 @@
 <ul class="menu">
-    <li><a href="{% url 'mainapp:home' %}" {% if 'home' in request.resolver_match.url_name %}class="active"{% endif %}>домой</a></li>
-    <li><a href="{% url 'mainapp:products' %}" {% if 'products' in request.resolver_match.url_name %}class="active"{% endif %}>продукты</a></li>
-    <li><a href="{% url 'mainapp:contact' %}" {% if 'contact' in request.resolver_match.url_name %}class="active"{% endif %}>контакты</a></li>
+    <li>
+        <a href="{% url 'mainapp:home' %}" {% if 'home' in request.resolver_match.url_name %}class="active"{% endif %}>
+            домой
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'mainapp:products' %}" {% if 'products' in request.resolver_match.url_name %}class="active"{% endif %}>
+            продукты
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'mainapp:contact' %}" {% if 'contact' in request.resolver_match.url_name %}class="active"{% endif %}>
+            контакты
+        </a>
+    </li>
+    {% if user.is_authenticated %}
+    <li>
+        <a href="{% url 'authapp:edit' %}" {% if 'contact' in request.resolver_match.url_name %}class="active"{% endif %}>
+            {{ user.username }}
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'authapp:logout' %}" {% if 'contact' in request.resolver_match.url_name %}class="active"{% endif %}>
+            выход
+        </a>
+    </li>
+    {% else %}
+    <li>
+        <a href="{% url 'authapp:login' %}" {% if 'contact' in request.resolver_match.url_name %}class="active"{% endif %}>
+            вход
+        </a>
+    </li>
+    {% endif %}
 </ul>
