@@ -1,12 +1,12 @@
 <ul class="links-menu">
         <li>
-            <a href= "/products/0/">
+            <a href= "{% url 'mainapp:products_id' 0 %}" {% if request.resolver_match.kwargs.pk == 0 %}class="active"{% endif %}>
                 Все
             </a>
         </li>
     {% for link_item in category_menu %}
         <li>
-            <a href= "{% url 'mainapp:products_id' link_item.pk %}" {% if request.resolver_match.url_name == link_item.reverse_url %}class="active"{% endif %}>
+            <a href= "{% url 'mainapp:products_id' link_item.pk %}" {% if request.resolver_match.kwargs.pk == link_item.pk %}class="active"{% endif %}>
                 {{ link_item.name }}
             </a>
         </li>

@@ -33,3 +33,11 @@
     </li>
     {% endif %}
 </ul>
+<a href="#" class="search"></a>
+<a href="{% url 'basketapp:view' %}" class="basket">
+    <span class="counter">
+        {% if basket %}
+            {{ basket|length }}
+        {% endif %}
+    </span>
+</a>

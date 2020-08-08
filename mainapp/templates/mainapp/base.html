@@ -23,6 +23,12 @@
 	<div class="container">
 
         {% block menu %}
+            <div class="hero-white">
+                <div class="header clearfix">
+                    <a href="/" class="logo"></a>
+                    {% include 'mainapp/include/inc_main_menu.html' %}
+                </div>
+            </div>
 	    {% endblock %}
 
         {% block content %}
