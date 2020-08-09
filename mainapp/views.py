@@ -7,7 +7,12 @@ from .models import ProductCategory, Product
 
 def get_basket(user):
     if user.is_authenticated:
-        return Basket.objects.filter(user=user)
+        # return Basket.objects.filter(user=user)
+        basket_data = {
+            'total_amount': Basket.total_amount(),
+            'value_of_goods': Basket.value_of_goods()
+        }
+        return basket_data
     else:
         return []
 
