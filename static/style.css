@@ -1070,3 +1070,10 @@ td:first-child {
 .related-products a:hover .text{
 	display: block;
 }
+
+.counter{
+    margin-left: 30px;
+    text-decoration: none;
+    display: inline-block;
+    color: black;
+}

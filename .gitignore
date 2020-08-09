@@ -9,3 +9,5 @@ venv
 .idea
 .idea/workspace.xml
 example.log
+./shop/__pycache__/settings.cpython-37.pyc
+./shop/__pycache__/urls.cpython-37.pyc
