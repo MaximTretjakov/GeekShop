@@ -1,3 +1,4 @@
+import random
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 
@@ -5,14 +6,18 @@ from basketapp.models import Basket
 from .models import ProductCategory, Product
 
 
+def get_hot_product():
+    products_list = Product.objects.all()
+    return random.sample(list(products_list), 1)[0]
+
+
+def get_same_products(hot_product):
+    return Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk)[:3]
+
+
 def get_basket(user):
     if user.is_authenticated:
-        # return Basket.objects.filter(user=user)
-        basket_data = {
-            'total_amount': Basket.total_amount(),
-            'value_of_goods': Basket.value_of_goods()
-        }
-        return basket_data
+        return Basket.objects.filter(user=user)
     else:
         return []
 
@@ -31,6 +36,20 @@ class HomePageView(View):
 class ContactPageView(View):
     def get(self, request):
         return render(request, 'mainapp/contact.html', {'title': 'Контакты', 'basket': get_basket(request.user)})
+
+
+class ProductPageView(View):
+    def get(self, request, **kwargs):
+        title = 'продукты'
+        product = get_object_or_404(Product, pk=kwargs['pk'])
+        category_menu = ProductCategory.objects.all()
+        content = {
+            'title': title,
+            'category_menu': category_menu,
+            'product': product,
+            'basket': get_basket(request.user),
+        }
+        return render(request, 'mainapp/product.html', content)
 
 
 class ProductsPageView(View):
@@ -55,11 +74,13 @@ class ProductsPageView(View):
             }
             return render(request, 'mainapp/products_list.html', content)
 
-        same_products = Product.objects.all()[:3]
+        hot_product = get_hot_product()
+        same_products = get_same_products(hot_product)
         content = {
             'title': title,
             'category_menu': category_menu,
             'same_products': same_products,
-            'basket': get_basket(request.user)
+            'basket': get_basket(request.user),
+            'hot_product': hot_product
         }
         return render(request, 'mainapp/products.html', content)

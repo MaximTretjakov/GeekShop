@@ -30,7 +30,7 @@
 		<div class="tab-content">
 			{% for product in products %}
 				<div class="block">
-					<a href="#"><img src="/media/{{ product.image }}" alt="/media/{{ product.short_desc }}">
+					<a href="{% url 'mainapp:product_page' product.pk %}"><img src="/media/{{ product.image }}" alt="/media/{{ product.short_desc }}">
 						<div class="text">
 							<h3>{{ product.category.name }}</h3>
 							<h4>{{ product.name }}</h4>

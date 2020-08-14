@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.db import models
-from django.db.models import Sum, F
 
 from mainapp.models import Product
 
@@ -11,12 +10,16 @@ class Basket(models.Model):
     quantity = models.PositiveIntegerField(default=0, verbose_name='количество')
     add_date_time = models.DateField(auto_now_add=True, verbose_name='время')
 
-    @staticmethod
-    def total_amount():
-        return Basket.objects.aggregate(Sum('quantity'))
+    @property
+    def product_cost(self):
+        return self.product.price * self.quantity
 
-    @staticmethod
-    def value_of_goods():
-        return Basket.objects.all().aggregate(
-            total_summ=Sum(F('quantity') * F('product__price'), output_field=models.FloatField())
-        )
+    @property
+    def total_quantity(self):
+        items = Basket.objects.filter(user=self.user)
+        return sum(list(map(lambda x: x.quantity, items)))
+
+    @property
+    def total_cost(self):
+        items = Basket.objects.filter(user=self.user)
+        return sum(list(map(lambda x: x.product_cost, items)))

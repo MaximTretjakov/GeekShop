@@ -14,7 +14,10 @@ class LoginPageView(FormView):
             user = auth.authenticate(username=username, password=password)
             if user and user.is_active:
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse('mainapp:home'))
+                if 'next' in request.POST.keys():
+                    return HttpResponseRedirect(request.POST['next'])
+                else:
+                    return HttpResponseRedirect(reverse('mainapp:home'))
             else:
                 return HttpResponse('Invalid login')
         else:
@@ -22,8 +25,9 @@ class LoginPageView(FormView):
 
     def get(self, request, *args, **kwargs):
         title = 'вход'
+        next_url = request.GET.get('next', '')
         login_form = ShopUserLoginForm(data=request.POST or None)
-        content = {'title': title, 'login_form': login_form}
+        content = {'title': title, 'login_form': login_form, 'next': next_url}
         return render(request, 'authapp/login.html', content)
 
 
