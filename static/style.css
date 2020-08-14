@@ -902,7 +902,7 @@ td:first-child {
 }
 .slider-product {
 	width: 570px;
-	height: 570px;
+	height: 370px;
 }
 .slider-control {
 	width: 420px;
@@ -1076,4 +1076,8 @@ td:first-child {
     text-decoration: none;
     display: inline-block;
     color: black;
+}
+
+.miniature{
+    width: 50px;
 }

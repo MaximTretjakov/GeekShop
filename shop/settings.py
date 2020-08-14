@@ -133,5 +133,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'authapp.ShopUser'
 
-LOGIN_REDIRECT_URL = reverse_lazy('mainapp:home')
-LOGIN_URL = reverse_lazy('authapp:login')
+LOGIN_URL = '/auth/login/'
