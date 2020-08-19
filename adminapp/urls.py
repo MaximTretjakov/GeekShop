@@ -14,7 +14,7 @@ urlpatterns = [
     path('users/delete/<int:pk>/', UserDeletePageView.as_view(), name='user_delete'),
 
     path('categories/create/', CategoryCreatePageView.as_view(), name='category_create'),
-    path('categories/read/', CategoriesPageView.as_view(), name='category'),
+    path('categories/read/', CategoriesPageView.as_view(), name='categories'),
     path('categories/update/<int:pk>/', CategoryUpdatePageView.as_view(), name='category_update'),
     path('categories/delete/<int:pk>/', CategoryDeletePageView.as_view(), name='category_delete'),
 
