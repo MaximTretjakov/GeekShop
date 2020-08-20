@@ -7,7 +7,7 @@ from .models import ProductCategory, Product
 
 
 def get_hot_product():
-    products_list = Product.objects.all()
+    products_list = Product.objects.filter(category__is_active=True)
     return random.sample(list(products_list), 1)[0]
 
 
@@ -24,7 +24,7 @@ def get_basket(user):
 
 class HomePageView(View):
     def get(self, request):
-        products = Product.objects.all()[:4]
+        products = Product.objects.filter(category__is_active=True)[:4]
         content = {
             'title': 'Магазин',
             'products': products,
@@ -55,7 +55,7 @@ class ProductPageView(View):
 class ProductsPageView(View):
     def get(self, request, **kwargs):
         title = 'Продукты'
-        category_menu = ProductCategory.objects.all()
+        category_menu = ProductCategory.objects.filter(is_active=True)
         pk = kwargs.get('pk', None)
 
         if pk is not None:
