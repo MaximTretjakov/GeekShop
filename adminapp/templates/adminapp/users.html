@@ -16,7 +16,11 @@
 						<a href={% url 'adminapp:user_update' object.pk %}>редактировать</a>
 					</button>
 					<button>
-						<a href={% url 'adminapp:user_delete' object.pk %}>удалить</a>
+						{% if object.is_active %}
+							<a href={% url 'adminapp:user_delete' object.pk %}>удалить</a>
+						{% else %}
+							<a href={% url 'adminapp:user_delete' object.pk %}>восстановить</a>
+						{% endif %}
 					</button>
 				</div>
 				<div class="user_name">
