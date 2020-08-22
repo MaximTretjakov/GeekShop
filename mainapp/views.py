@@ -1,4 +1,6 @@
 import random
+
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 
@@ -57,19 +59,29 @@ class ProductsPageView(View):
         title = 'Продукты'
         category_menu = ProductCategory.objects.filter(is_active=True)
         pk = kwargs.get('pk', None)
+        page = kwargs.get('page', 1)
 
         if pk is not None:
             if pk == 0:
                 products_list = Product.objects.all()
-                category = {'name': 'Все'}
+                category = {'pk': 0, 'name': 'Все'}
             else:
                 category = get_object_or_404(ProductCategory, pk=pk)
                 products_list = Product.objects.filter(category__pk=pk)
+
+            paginator = Paginator(products_list, 1)
+            try:
+                product_paginator = paginator.page(page)
+            except PageNotAnInteger:
+                product_paginator = paginator.page(1)
+            except EmptyPage:
+                product_paginator = paginator.page(paginator.num_pages)
+
             content = {
                 'title': title,
                 'category_menu': category_menu,
                 'category': category,
-                'products': products_list,
+                'products': product_paginator,
                 'basket': get_basket(request.user)
             }
             return render(request, 'mainapp/products_list.html', content)
