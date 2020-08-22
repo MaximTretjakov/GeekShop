@@ -1,0 +1,20 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div>
+    Продукт<strong>{{ object.category.name|title }} / {{ object.name }}</strong>
+    <br>
+    <form class="form-horizontal" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ update_form.as_p }}
+        <input class="form-control" type="submit" value="сохранить">
+    </form>
+    <button class="btn btn-round form-control last">
+        <a href="{% url 'adminapp:products' category.pk %}">
+            к списку продуктов
+        </a>
+    </button>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.urls import path
 from adminapp.views import (
-    UserCreatePageView, UsersPageView, UserUpdatePageView, UserDeletePageView,
+    UserCreatePageView, UsersListView, UserUpdatePageView, UserDeletePageView,
     CategoryCreatePageView, CategoriesPageView, CategoryUpdatePageView, CategoryDeletePageView,
     ProductCreatePageView, ProductsPageView, ProductUpdatePageView, ProductDeletePageView, ProductReadPageView
 )
@@ -9,7 +9,8 @@ app_name = 'adminapp'
 
 urlpatterns = [
     path('users/create/', UserCreatePageView.as_view(), name='user_create'),
-    path('users/read/', UsersPageView.as_view(), name='users'),
+    # path('users/read/', UsersPageView.as_view(), name='users'),
+    path('users/read/', UsersListView.as_view(), name='users'),
     path('users/update/<int:pk>/', UserUpdatePageView.as_view(), name='user_update'),
     path('users/delete/<int:pk>/', UserDeletePageView.as_view(), name='user_delete'),
 

@@ -2,29 +2,36 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from django.views.generic import View
+from django.views.generic import View, ListView
 
-from adminapp.forms import ShopUserAdminEditForm, ProductCategoryEditForm
+from adminapp.forms import ShopUserAdminEditForm, ProductCategoryEditForm, ProductEditForm
 from authapp.forms import ShopUserRegisterForm
 from authapp.models import ShopUser
 from mainapp.models import ProductCategory, Product
 
 
-class UsersPageView(UserPassesTestMixin, View):
+# class UsersPageView(UserPassesTestMixin, View):
+#     def test_func(self):
+#         return self.request.user.is_superuser
+#
+#     def post(self, request):
+#         pass
+#
+#     def get(self, request):
+#         title = 'админка / пользователи'
+#         users_list = ShopUser.objects.all()
+#         content = {
+#             'title': title,
+#             'objects': users_list
+#         }
+#         return render(request, 'adminapp/users.html', content)
+
+class UsersListView(UserPassesTestMixin, ListView):
+    model = ShopUser
+    template_name = 'adminapp/users.html'
+
     def test_func(self):
         return self.request.user.is_superuser
-
-    def post(self, request):
-        pass
-
-    def get(self, request):
-        title = 'админка / пользователи'
-        users_list = ShopUser.objects.all()
-        content = {
-            'title': title,
-            'objects': users_list
-        }
-        return render(request, 'adminapp/users.html', content)
 
 
 class UserCreatePageView(UserPassesTestMixin, View):
@@ -191,10 +198,22 @@ class ProductCreatePageView(UserPassesTestMixin, View):
         return self.request.user.is_superuser
 
     def post(self, request, **kwargs):
-        pass
+        category = get_object_or_404(ProductCategory, pk=kwargs['pk'])
+        edit_form = ProductEditForm(request.POST, request.FILES)
+        if edit_form.is_valid():
+            edit_form.save()
+            return HttpResponseRedirect(reverse('adminapp:products', kwargs={'pk': category.pk}))
 
     def get(self, request, **kwargs):
-        pass
+        title = 'продукт / добавить'
+        category = get_object_or_404(ProductCategory, pk=kwargs['pk'])
+        edit_form = ProductEditForm()
+        content = {
+            'title': title,
+            'update_form': edit_form,
+            'category': category
+        }
+        return render(request, 'adminapp/product_update.html', content)
 
 
 class ProductReadPageView(UserPassesTestMixin, View):
@@ -204,8 +223,14 @@ class ProductReadPageView(UserPassesTestMixin, View):
     def post(self, request, **kwargs):
         pass
 
-    def get(self, request):
-        pass
+    def get(self, request, **kwargs):
+        title = 'продукт / подробнее'
+        product = get_object_or_404(Product, pk=kwargs['pk'])
+        content = {
+            'title': title,
+            'object': product
+        }
+        return render(request, 'adminapp/product_read.html', content)
 
 
 class ProductUpdatePageView(UserPassesTestMixin, View):
@@ -213,10 +238,23 @@ class ProductUpdatePageView(UserPassesTestMixin, View):
         return self.request.user.is_superuser
 
     def post(self, request, **kwargs):
-        pass
+        title = 'продукт / редактировать'
+        edit_product = get_object_or_404(Product, pk=kwargs['pk'])
+        edit_form = ProductEditForm(request.POST, request.FILES, instance=edit_product)
+        if edit_form.is_valid():
+            edit_form.save()
+            return HttpResponseRedirect(reverse('adminapp:product_update', kwargs={'pk': edit_product.pk}))
 
     def get(self, request, **kwargs):
-        pass
+        title = 'продукт / редактировать'
+        edit_product = get_object_or_404(Product, pk=kwargs['pk'])
+        edit_form = ProductEditForm(instance=edit_product)
+        content = {
+            'title':  title,
+            'update_form': edit_form,
+            'category': edit_product.category
+        }
+        return render(request, 'adminapp/product_update.html', content)
 
 
 class ProductDeletePageView(UserPassesTestMixin, View):
@@ -224,7 +262,16 @@ class ProductDeletePageView(UserPassesTestMixin, View):
         return self.request.user.is_superuser
 
     def post(self, request, **kwargs):
-        pass
+        product = get_object_or_404(Product, pk=kwargs['pk'])
+        if product.is_active:
+            product.is_active = False
+        else:
+            product.is_active = True
+        product.save()
+        return HttpResponseRedirect(reverse('adminapp:products', kwargs={'pk': product.category.pk}))
 
     def get(self, request, **kwargs):
-        pass
+        title = 'продукт / удаление'
+        product = get_object_or_404(Product, pk=kwargs['pk'])
+        content = {'title': title, 'product_to_delete': product}
+        return render(request, 'adminapp/product_delete.html', content)
