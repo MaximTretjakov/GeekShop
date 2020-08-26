@@ -135,3 +135,23 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 AUTH_USER_MODEL = 'authapp.ShopUser'
 
 LOGIN_URL = '/auth/login/'
+
+# domain name
+DOMAIN_NAME = 'http://localhost:8088'
+
+# e-mail settings
+EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'some_email'
+# EMAIL_HOST_PASSWORD = 'some_password'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = 'some_email'
+SERVER_EMAIL = 'some_email'
+
+# вариант python -m smtpd -n -c DebuggingServer localhost:25
+EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
+
+# вариант логирования сообщений почты в виде файлов вместо отправки
+# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+# EMAIL_FILE_PATH = 'tmp/email-messages/'
