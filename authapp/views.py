@@ -10,7 +10,7 @@ from authapp.models import ShopUser
 
 
 def send_verify_mail(user):
-    verify_link = reverse('auth:verify', args=[user.email, user.activation_key])
+    verify_link = reverse('authapp:verify', args=[user.email, user.activation_key])
     title = f'Подтверждение учетной записи {user.username}'
     message = f'Для подтверждения учетной записи {user.username} на портале {settings.DOMAIN_NAME} ' \
               f'перейдите по ссылке: \n{settings.DOMAIN_NAME}{verify_link}'
@@ -18,7 +18,7 @@ def send_verify_mail(user):
 
 
 class VerifyPageView(View):
-    def post(self, request, **kwargs):
+    def get(self, request, **kwargs):
         try:
             user = ShopUser.objects.get(email=kwargs['email'])
             if user.activation_key == kwargs['activation_key'] and not user.is_activation_key_expired():
@@ -31,10 +31,7 @@ class VerifyPageView(View):
                 return render(request, 'authapp/verification.html')
         except Exception as e:
             print(f'error activation user : {e.args}')
-            return HttpResponseRedirect(reverse('main'))
-
-    def get(self, request, **kwargs):
-        pass
+            return HttpResponseRedirect(reverse('home'))
 
 
 class LoginPageView(FormView):
@@ -73,8 +70,13 @@ class RegisterPageView(FormView):
     def post(self, request, *args, **kwargs):
         register_form = ShopUserRegisterForm(request.POST, request.FILES)
         if register_form.is_valid():
-            register_form.save()
-            return HttpResponseRedirect(reverse('authapp:login'))
+            user = register_form.save()
+            if send_verify_mail(user):
+                print('сообщение подтверждения отправлено')
+                return HttpResponseRedirect(reverse('authapp:login'))
+            else:
+                print('ошибка отправки сообщения')
+                return HttpResponseRedirect(reverse('authapp:login'))
         else:
             return render(request, 'authapp/register.html', {'register_form': register_form})
 

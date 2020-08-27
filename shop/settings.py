@@ -69,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'mainapp.context_processors.basket',
             ],
         },
     },
@@ -137,17 +138,14 @@ AUTH_USER_MODEL = 'authapp.ShopUser'
 LOGIN_URL = '/auth/login/'
 
 # domain name
-DOMAIN_NAME = 'http://localhost:8088'
+DOMAIN_NAME = 'http://localhost:8000'
 
 # e-mail settings
-EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'some_email'
-# EMAIL_HOST_PASSWORD = 'some_password'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
-DEFAULT_FROM_EMAIL = 'some_email'
-SERVER_EMAIL = 'some_email'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = '25'
+# EMAIL_HOST_USER = 'django@geekshop.local'
+# EMAIL_HOST_PASSWORD = 'geekshop'
+EMAIL_USE_SSL = False
 
 # вариант python -m smtpd -n -c DebuggingServer localhost:25
 EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
