@@ -1,6 +1,7 @@
 from django.views.generic import FormView, View
+from django.db import transaction
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
-from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm
+from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm, ShopUserProfileEditForm
 from django.contrib import auth
 from django.urls import reverse
 
@@ -88,16 +89,21 @@ class RegisterPageView(FormView):
 
 
 class EditPageView(FormView):
-    def post(self, request, *args, **kwargs):
+    @transaction.atomic
+    def post(self, request, **kwargs):
         edit_form = ShopUserEditForm(request.POST, request.FILES, instance=request.user)
-        if edit_form.is_valid():
+        profile_form = ShopUserProfileEditForm(request.POST, instance=request.user.shopuserprofile)
+        if edit_form.is_valid() and profile_form.is_valid():
             edit_form.save()
             return HttpResponseRedirect(reverse('authapp:edit'))
-        else:
-            return render(request, 'authapp/edit.html', {'edit_form': edit_form})
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, **kwargs):
         title = 'редактирование'
         edit_form = ShopUserEditForm(instance=request.user)
-        content = {'title': title, 'edit_form': edit_form}
+        profile_form = ShopUserProfileEditForm(instance=request.user.shopuserprofile)
+        content = {
+            'title': title,
+            'edit_form': edit_form,
+            'profile_form': profile_form
+        }
         return render(request, 'authapp/edit.html', content)
