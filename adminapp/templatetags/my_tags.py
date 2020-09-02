@@ -12,3 +12,13 @@ def media_folder_users(string):
 
 
 register.filter('media_folder_users', media_folder_users)
+
+
+def media_folder_products(string):
+    if not string:
+        string = 'users_avatars/product-1.jpg'
+
+    return f'{settings.MEDIA_URL}{string}'
+
+
+register.filter('media_folder_products', media_folder_products)
