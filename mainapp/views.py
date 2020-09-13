@@ -18,7 +18,8 @@ def get_same_products(hot_product):
 
 class HomePageView(View):
     def get(self, request):
-        products = Product.objects.filter(category__is_active=True)[:4]
+        # products = Product.objects.filter(category__is_active=True)[:4]
+        products = Product.objects.filter(is_active=True, category__is_active=True).select_related('category')[:3]
         content = {
             'title': 'Магазин',
             'products': products,
