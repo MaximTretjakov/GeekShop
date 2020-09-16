@@ -4,6 +4,8 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from django.views.generic import View
 from django.conf import settings
 from django.core.cache import cache
@@ -36,6 +38,7 @@ class ContactPageView(View):
         return render(request, 'mainapp/contact.html', {'title': 'Контакты'})
 
 
+@method_decorator(never_cache, name='dispatch')
 class ProductPageView(View):
     def get(self, request, **kwargs):
         title = 'продукты'
@@ -49,6 +52,7 @@ class ProductPageView(View):
         return render(request, 'mainapp/product.html', content)
 
 
+@method_decorator(never_cache, name='dispatch')
 class ProductsPageView(View):
     def get(self, request, **kwargs):
         title = 'Продукты'
