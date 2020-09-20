@@ -1,30 +1,18 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.db.models import F
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
-from django.views.generic import View, ListView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import View, ListView, UpdateView
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
+from django.db import connection
 
 from adminapp.forms import ShopUserAdminEditForm, ProductCategoryEditForm, ProductEditForm
 from authapp.forms import ShopUserRegisterForm
 from authapp.models import ShopUser
 from mainapp.models import ProductCategory, Product
 
-
-# class UsersPageView(UserPassesTestMixin, View):
-#     def test_func(self):
-#         return self.request.user.is_superuser
-#
-#     def post(self, request):
-#         pass
-#
-#     def get(self, request):
-#         title = 'админка / пользователи'
-#         users_list = ShopUser.objects.all()
-#         content = {
-#             'title': title,
-#             'objects': users_list
-#         }
-#         return render(request, 'adminapp/users.html', content)
 
 class UsersListView(UserPassesTestMixin, ListView):
     model = ShopUser
@@ -275,3 +263,20 @@ class ProductDeletePageView(UserPassesTestMixin, View):
         product = get_object_or_404(Product, pk=kwargs['pk'])
         content = {'title': title, 'product_to_delete': product}
         return render(request, 'adminapp/product_delete.html', content)
+
+
+def db_profile_by_type(prefix, type, queries):
+    update_queries = list(filter(lambda x: type in x['sql'], queries))
+    print(f'db_profile {type} for {prefix}:')
+    [print(query['sql']) for query in update_queries]
+
+
+@receiver(pre_save, sender=ProductCategory)
+def product_is_active_update_productcategory_save(sender, instance, **kwargs):
+    if instance.pk:
+        if instance.is_active:
+            instance.product_set.update(is_active=True)
+        else:
+            instance.product_set.update(is_active=False)
+
+        db_profile_by_type(sender, 'UPDATE', connection.queries)
